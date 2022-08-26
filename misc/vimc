@@ -1,0 +1,5 @@
+#!/bin/sh
+# SPDX-License-Identifier: zlib-acknowledgement 
+
+export CSCOPE_DB="$HOME/prog/hals/STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/cscope.out"
+exec vim "$*"

@@ -1,0 +1,42 @@
+#!/bin/sh
+# SPDX-License-Identifier: zlib-acknowledgement 
+
+test ! -d build && mkdir build
+
+gcc -g code/cli.c -o build/cli
+./build/cli
+
+## TODO(Ryan): Understand float and thumb flags
+#arch_compiler_flags="-mlittle-endian -mcpu=cortex-m4 -mthumb -mthumb-interwork -mfloat-abi=hard 
+#  -mfpu=fpv4-sp-d16"
+#
+#hal_dir="$HOME/prog/hals/STM32F4xx_DSP_StdPeriph_Lib_V1.8.0"
+#hal_compiler_flags="-DUSE_STDPERIPH_DRIVER
+#           -I${hal_dir}/Libraries/CMSIS/Include
+#           -I${hal_dir}/Libraries/CMSIS/Device/ST/STM32F4xx/Include
+#           -I${hal_dir}/Libraries/STM32F4xx_StdPeriph_Driver/inc
+#           -I${hal_dir}/Project/STM32F4xx_StdPeriph_Templates"
+## TODO(Ryan): Only add used driver source files
+#hal_src_files="${hal_dir}/Libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+#${hal_dir}/Libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/TrueSTUDIO/startup_stm32f429_439xx.s
+#$(find "${hal_dir}/Libraries/STM32F4xx_StdPeriph_Driver/src/" -type f \( -iname "*.c" ! -iname "*_fsmc.c" \))"
+#hal_linker_flags="-T${hal_dir}/Project/STM32F4xx_StdPeriph_Templates/TrueSTUDIO/STM32F429_439xx/STM32F439NI_FLASH.ld"
+#
+#ignored_compiler_warnings='-Wno-unused-variable -Wno-unused-function -Wno-misleading-indentation
+#  -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-missing-field-initializers 
+#  -Wno-write-strings -Wno-unused-result'
+#common_compiler_flags="-Werror -Wall -Wextra -pedantic -Warray-bounds=2 
+#  -ffunction-sections -fdata-sections $ignored_compiler_warnings"
+#build_type_compiler_flags="-O0 -g -ggdb3 -DRED_SLOW -DRED_INTERNAL"
+#
+#libraries=""
+#common_linker_flags="-Wl,--gc-sections $libraries"
+#
+## IMPORTANT(Ryan): Order of src files is important to ensure appropriate MCU define
+## is available to the hal files
+#arm-none-eabi-gcc $common_compiler_flags $build_type_compiler_flags \
+#                  $arch_compiler_flags $hal_compiler_flags \
+#                  code/red.c $hal_src_files -o build/red.elf \
+#                  $common_linker_flags $hal_linker_flags
+#arm-none-eabi-objcopy -O ihex build/red.elf build/red.hex
+#arm-none-eabi-objcopy -O binary build/red.elf build/red.bin
