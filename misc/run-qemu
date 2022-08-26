@@ -1,0 +1,12 @@
+#!/bin/sh
+# SPDX-License-Identifier: zlib-acknowledgement 
+
+# IMPORTANT(Ryan): TEST_FILE_NAME is set by wrapper script run-tests
+TEST_FILE_NAME="build/test-tem.elf"
+qemu-system-gnuarmeclipse --nographic --no-reboot \
+    --board STM32F4-Discovery --mcu STM32F429ZI \
+    --semihosting-config enable=on,target=native --image "${TEST_FILE_NAME}" 
+
+# TODO(Ryan): What changes would be required to use upstream qemu for a board not directly
+# supported but just uses cortex-m4? Would a simple linker script difference be sufficient?
+# Not concerned with actual peripheral emulation....

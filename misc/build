@@ -1,0 +1,17 @@
+#!/bin/sh
+# SPDX-License-Identifier: zlib-acknowledgement
+
+mkdir -p build
+
+
+# TODO(Ryan): Change to using libdbus once gio figured out 
+# sudo apt install libdbus-1-dev
+# NOTE(Ryan): Annoyingly, include paths are not standard.
+# So, $(pkg-config --list-all | grep dbus) && $(pkg-config --libs --cflags dbus-1)
+
+# sudo apt install libbluetooth-dev libglib2.0-dev
+
+gcc $(pkg-config --cflags gio-2.0) code/bluetooth-example.c -o build/bluetooth-example \
+  $(pkg-config --libs gio-2.0) -lbluetooth
+
+# ./build/bluetooth-example
